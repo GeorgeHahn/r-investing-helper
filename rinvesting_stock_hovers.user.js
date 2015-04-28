@@ -5,7 +5,7 @@
 // @include     https://www.reddit.com/r/investing/*
 // @include     http://www.reddit.com/r/options/*
 // @include     https://www.reddit.com/r/options/*
-// @version     1
+// @version     2
 // @grant       GM_xmlhttpRequest
 // @downloadURL https://raw.githubusercontent.com/GeorgeHahn/r-investing-helper/master/rinvesting_stock_hovers.user.js
 // ==/UserScript==

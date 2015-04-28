@@ -5,10 +5,14 @@
 // @include     https://www.reddit.com/r/investing*
 // @include     http://www.reddit.com/r/options*
 // @include     https://www.reddit.com/r/options*
-// @version     3
+// @version     4
 // @grant       GM_xmlhttpRequest
 // @downloadURL https://raw.githubusercontent.com/GeorgeHahn/r-investing-helper/master/rinvesting_stock_hovers.user.js
 // ==/UserScript==
+
+function log(obj) {
+  //console.log(obj);
+}
 
 // http://stackoverflow.com/a/10730777/1042744
 function textNodesUnder(el) {
@@ -77,18 +81,27 @@ function cleanup(transform) {
 }
 
 function MakeReq(url, callback) {
+  log("Requesting " + url);
   var request = GM_xmlhttpRequest({
     method: "GET",
     url: url,
     onload: function(res) {
       if (res.status >= 200 && res.status < 400) {
-        if(res.responseText.indexOf("No symbol matches") === -1)
+        if(res.responseText.indexOf("No symbol matches") === -1) {
+          log("Got response for " + url);
           callback(JSON.parse(res.responseText));
+        } else {
+          log("No symbol matches returned for request: " + url);
+        }
       } else {
         // should probably handle error
-        console.log("Error: " + res.responseText + " status " + res.status);
+        log("Error: " + res.responseText + " status " + res.status);
       }
-    }
+    },
+    onerror: function(res) {
+      log("Not sure what happened, but the API request failed");
+      log(res);
+    },
   });
 }
 
@@ -100,21 +113,22 @@ function getTickerInfo(symbol, callback) {
     if(tickerstorewait[symbol] === undefined)
     {
       tickerstorewait[symbol] = [function() { callback(tickerstore[symbol]); }];
-      console.log("Requesting " + symbol);
+      log("Requesting " + symbol);
       
       MakeReq("http://dev.markitondemand.com/Api/v2/Quote/json?symbol=" + symbol, function(ticker) {
+        log("Got ticker info for " + symbol);
         tickerstore[symbol] = ticker;
         tickerstorewait[symbol].forEach(function(callback){ callback(); });
         tickerstorewait[symbol] = null;
       });
     }
     else {
-      //console.log("Queueing request for " + symbol);
+      log("Queueing request for " + symbol);
       tickerstorewait[symbol].push(function() { callback(tickerstore[symbol]); } );
     }
   }
   else {
-    //console.log("Using cached request for " + symbol);
+    log("Using cached request for " + symbol);
     callback(tickerstore[symbol]);
   }
 }

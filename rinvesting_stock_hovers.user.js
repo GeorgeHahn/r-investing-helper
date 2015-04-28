@@ -7,6 +7,8 @@
 // @include     https://www.reddit.com/r/options*
 // @include     http://www.reddit.com/r/stocks*
 // @include     https://www.reddit.com/r/stocks*
+// @include     http://www.reddit.com/r/stockmarket*
+// @include     https://www.reddit.com/r/stockmarket*
 // @version     4
 // @grant       GM_xmlhttpRequest
 // @downloadURL https://raw.githubusercontent.com/GeorgeHahn/r-investing-helper/master/rinvesting_stock_hovers.user.js

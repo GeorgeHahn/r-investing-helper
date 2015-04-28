@@ -5,7 +5,7 @@
 // @include     https://www.reddit.com/r/investing*
 // @include     http://www.reddit.com/r/options*
 // @include     https://www.reddit.com/r/options*
-// @version     2
+// @version     3
 // @grant       GM_xmlhttpRequest
 // @downloadURL https://raw.githubusercontent.com/GeorgeHahn/r-investing-helper/master/rinvesting_stock_hovers.user.js
 // ==/UserScript==
@@ -52,7 +52,10 @@ function run() {
       sym.innerHTML = node.textContent;
       
       matches.forEach(function (match) {
-        getTickerInfo(match, function(info) {
+        getTickerInfo(match, function(ticker) {
+          if(ticker.Symbol !== match)
+            return;
+          var info = "<span title=\"" + ticker.Name + " $" + ticker.LastPrice + " ($" + ticker.Change + ", " + ticker.ChangePercent + "%)\"><b><i>" + ticker.Symbol + "</i></b></span>"
           var matchregex = new RegExp(match,"g");
           sym.innerHTML = sym.innerHTML.replace(matchregex, info);
         });
@@ -100,7 +103,7 @@ function getTickerInfo(symbol, callback) {
       console.log("Requesting " + symbol);
       
       MakeReq("http://dev.markitondemand.com/Api/v2/Quote/json?symbol=" + symbol, function(ticker) {
-        tickerstore[symbol] = "<span title=\"" + ticker.Name + " $" + ticker.LastPrice + " ($" + ticker.Change + ", " + ticker.ChangePercent + "%)\"><b><i>" + ticker.Symbol + "</i></b></span>";
+        tickerstore[symbol] = ticker;
         tickerstorewait[symbol].forEach(function(callback){ callback(); });
         tickerstorewait[symbol] = null;
       });

@@ -1,5 +1,5 @@
 # /r/investing helper
-Adds stock information tooltips every time someone mentions a stock symbol
+Adds stock information tooltips every time someone mentions a stock symbol. Uses the [Markit on Demand API](http://dev.markitondemand.com/).
 
 ![Example image](http://i.imgur.com/XcfVkaM.png)
 

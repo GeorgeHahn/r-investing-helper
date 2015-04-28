@@ -50,7 +50,8 @@ function run() {
       
       matches.forEach(function (match) {
         getTickerInfo(match, function(info) {
-          sym.innerHTML = sym.innerHTML.replace(match, info);
+          var matchregex = new RegExp(match,"g");
+          sym.innerHTML = sym.innerHTML.replace(matchregex, info);
         });
       });
       

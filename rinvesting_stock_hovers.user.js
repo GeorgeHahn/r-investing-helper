@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        /r/investing stock hovers
 // @namespace   http://www.genericmaker.com/
-// @include     https?://www.reddit.com/r/investing/*
-// @include     https?://www.reddit.com/r/options/*
+// @include     /^https?://www\.reddit\.com/r/investing/.*$
+// @include     /^https?://www\.reddit\.com/r/options/.*$
 // @version     1
 // @grant       GM_xmlhttpRequest
 // @downloadURL https://raw.githubusercontent.com/GeorgeHahn/r-investing-helper/master/rinvesting_stock_hovers.user.js
